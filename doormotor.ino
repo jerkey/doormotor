@@ -10,11 +10,26 @@ pins 2,3,4,7 are BHI, BLI, ALI, AHI
 
 numbers below refer to motor screw terminals on controller
 http://spaz.org/~jake/pix/2017-01/20170125_023751.jpg
-blue high only  = 2 to + = BHI
-green high only = 2 to - = BLI
+blue high   = 2 to + = BHI
+green high  = 2 to - = BLI
 
-white high only  = 6 to + = AHI
-yellow high only = 6 to - = ALI
+white high  = 6 to + = AHI
+yellow high = 6 to - = ALI
 
-1,3,4,5 all - all the time (during this test of middle chip)
+BELOW refers to chip near 1,2,3 motor screw terminals
+pins 2,3,4,7 are BHI, BLI, ALI, AHI
+2=blue
+3=green
+4=yellow
+7=white
+
+numbers below refer to motor screw terminals on controller
+http://spaz.org/~jake/pix/2017-01/20170125_023751.jpg
+blue high   = 1 to + = BHI
+green high  = 1 to - = BLI
+
+white high  = 3 to + = AHI
+yellow high = 3 to - = ALI
+
+
 */
