@@ -1,6 +1,7 @@
 /*
  * notes on motor controller board http://spaz.org/~jake/pix/2017-01/20170125_023207.jpg
-middle chip HIP4082
+middle chip HIP4082 http://www.intersil.com/content/dam/Intersil/documents/hip4/hip4082.pdf
+
 http://spaz.org/~jake/pix/2017-01/20170125_023259.jpg
 pins 2,3,4,7 are BHI, BLI, ALI, AHI
 2=blue
