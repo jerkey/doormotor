@@ -32,4 +32,9 @@ white high  = 3 to + = AHI
 yellow high = 3 to - = ALI
 
 
+ * motor 10-pin header:
+ * orange / white = 18 ohm BRAKE winding
+ * red = +5v
+ * black = ground
+ * green and blue = ANALOG quadrature?  shows values between 0-5V depending on position.
 */
