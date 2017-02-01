@@ -15,6 +15,9 @@ firmware.elf: $(OBJS)
 flash: firmware.elf
 	$(AVRDUDE) $(AVRDUDEOPTS) -U flash:w:firmware.elf
 
+# E: ff, H:d9, L:e2
+fuses:
+	$(AVRDUDE) $(AVRDUDEOPTS) -U efuse:w:0xff:m -U hfuse:w:0xd9:m -U lfuse:w:0xe2:m
 clean:
 	rm -fr *.o firmware.elf sintab.c
 
