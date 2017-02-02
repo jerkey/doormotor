@@ -17,21 +17,21 @@ static void compute_scaled_sintab(unsigned char mult);
 
 void pwm_init()
 {
-	DDRD |= (1<<3) | (1<<5) | (1<<6);
-	DDRB |= (1<<1) | (1<<2) | (1<<3);
+	DDRD |= (1<<3) | (1<<5) | (1<<6); // data direction registers     PD3, PD5, PD6
+	DDRB |= (1<<1) | (1<<2) | (1<<3); // setting all these as outputs PB1, PB2, PB3
 	
-	PORTD &= ~((1<<3) | (1<<5) | (1<<6));
-	PORTB &= ~((1<<1) | (1<<2) | (1<<3));
+	PORTD &= ~((1<<3) | (1<<5) | (1<<6)); // PD3 = OC2B, PD5 = OC0B, PD6 = OC0A
+	PORTB &= ~((1<<1) | (1<<2) | (1<<3)); // PB1 = OC1A, PB2 = OC1B, PB3 = OC2A
 }
 
-static void compute_scaled_sintab(unsigned char mult)
+static void compute_scaled_sintab(unsigned char mult) // to get less than 100% of supply voltage
 {
 	int i;
 	unsigned int val;
 
 	for (i=0;i<256;i++) {
 		val = mult * sintab[i];
-		scaled_sintab[i] = val >> 8;
+		scaled_sintab[i] = val >> 8; // shr back down to 8 bit after multiplication
 	}
 }
 
