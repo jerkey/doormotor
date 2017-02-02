@@ -73,10 +73,7 @@ void pwm_enable()
 
 void pwm_disable()
 {
-	PORTD &= ~((1<<3) | (1<<5) | (1<<6));
-	PORTB &= ~((1<<1) | (1<<2) | (1<<3));
-
-	TCCR0A = 0;
+	TCCR0A = 0; // set PWM values to zero
 	TCCR1A = 0;
 	TCCR2A = 0;
 
@@ -85,6 +82,9 @@ void pwm_disable()
 	TCCR1B = 0;	
 
 	TIMSK0 &= ~1;
+
+	PORTD &= ~((1<<3) | (1<<5) | (1<<6)); // set outputs LOW
+	PORTB &= ~((1<<1) | (1<<2) | (1<<3)); // set outputs LOW
 }
 
 void pwm_update_phases()
