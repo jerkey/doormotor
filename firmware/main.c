@@ -97,10 +97,11 @@ static int adc_command()
 
 static void adc_start_conversion()
 {
-	ADMUX = (1<<6) | adc_source;
+	ADMUX = (1<<REFS0) | adc_source;
 
 	ADCSRA &= ~(1<<4);	   /* clear interrupt flag */
-	ADCSRA |= (1<<6);	/* start conversion */
+	ADCSRA |= (1<<ADPS0) | (1<<ADPS1) | (1<<ADPS2) | (1<<ADEN);
+	ADCSRA |= (1<<ADSC);	/* start conversion */
 }
 
 static void adc_update()
@@ -127,6 +128,8 @@ void main()
 	serial_rx_enable();
 
 	ADCSRA = (1<<7);	/* ADEN */
+	ADCSRB = 0;
+
 	adc_start_conversion();
 
 	while (1) {
