@@ -1,8 +1,9 @@
 CC=avr-gcc
 AVRDUDE=avrdude
-#AVRDUDEOPTS=-cusbtiny -pm328p
-AVRDUDEOPTS=-carduino -pm328p -P /dev/ttyUSB0
-CFLAGS=-mmcu=atmega328p -DF_CPU=16000000UL
+AVRDUDEOPTS=-cusbtiny -pm328p
+AVRDUDEUPLOAD=-carduino -P/dev/ttyUSB0 -b115200 -D -pm328p
+MHZ=16
+CFLAGS=-mmcu=atmega328p -DF_CPU=$(MHZ)000000UL
 OBJS=main.o serial.o pwm.o spi.o sintab.o
 
 all: firmware.elf
@@ -15,6 +16,9 @@ firmware.elf: $(OBJS)
 
 flash: firmware.elf
 	$(AVRDUDE) $(AVRDUDEOPTS) -U flash:w:firmware.elf
+
+upload: firmware.elf
+	$(AVRDUDE) $(AVRDUDEUPLOAD) -U flash:w:firmware.elf
 
 # E: ff, H:d9, L:e2
 fuses:
