@@ -1,3 +1,5 @@
 sintab.c
 *.o
 *~
+*.elf
+

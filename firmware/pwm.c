@@ -9,9 +9,9 @@ static unsigned char pwm_position;
 
 unsigned char pwm_deadtime = 10;
 unsigned char pwm_step = 1;
-unsigned char pwm_amplitude = 50;
-unsigned char pwm_prescale = 50;
-char pwm_direction = 1;
+unsigned char pwm_amplitude = 80;
+unsigned char pwm_prescale = 8;
+char pwm_direction = 0;
 
 static void compute_scaled_sintab(unsigned char mult);
 
@@ -29,9 +29,16 @@ static void compute_scaled_sintab(unsigned char mult)
 	int i;
 	unsigned int val;
 
-	for (i=0;i<256;i++) {
-		val = mult * sintab[i];
-		scaled_sintab[i] = val >> 8;
+	if (pwm_direction == 0) {
+		for (i=0;i<256;i++) {
+			val = mult * sintab[i];
+			scaled_sintab[i] = val >> 8;
+		}
+	} else {
+		for (i=0;i<256;i++) {
+			val = mult * sintab[255-i];
+			scaled_sintab[i] = val >> 8;
+		}
 	}
 }
 
@@ -123,20 +130,28 @@ static unsigned char counter = 0;
 
 ISR(TIMER0_OVF_vect)
 {
+	int commute = 0;
+
 	counter++;
 
 	if (counter >= pwm_prescale) {
 		int index;
 
 		pwm_position += pwm_step;
+		if (pwm_position < pwm_step)
+			commute = 1;
 
-		/* commutation on overflow */
-		if (pwm_position < pwm_step) {
-			pwm_state = (pwm_state + 1) % 3;
+		if (commute) {
+			if (pwm_direction == 0)
+				pwm_state = (pwm_state + 1) % 3;
+			else
+				pwm_state = (pwm_state + 2) % 3;
 			PORTC ^= (1<<5);
 			TCNT0 = 0;
 			TCNT1 = 0;
 			TCNT2 = 0;
+
+			commute = 0;
 		}
 		counter = 0;
 	}

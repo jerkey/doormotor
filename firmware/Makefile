@@ -1,7 +1,8 @@
 CC=avr-gcc
 AVRDUDE=avrdude
-AVRDUDEOPTS=-cusbtiny -pm328p
-CFLAGS=-mmcu=atmega328p -DF_CPU=8000000UL
+#AVRDUDEOPTS=-cusbtiny -pm328p
+AVRDUDEOPTS=-carduino -pm328p -P /dev/ttyUSB0
+CFLAGS=-mmcu=atmega328p -DF_CPU=16000000UL
 OBJS=main.o serial.o pwm.o spi.o sintab.o
 
 all: firmware.elf

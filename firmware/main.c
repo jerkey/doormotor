@@ -19,7 +19,7 @@ static int led_command()
 	return 0;
 }
 
-extern unsigned char pwm_deadtime, pwm_step, pwm_prescale, pwm_amplitude;
+extern unsigned char pwm_deadtime, pwm_step, pwm_prescale, pwm_amplitude, pwm_direction;
 
 static int pwm_command()
 {
@@ -48,6 +48,10 @@ static int pwm_command()
 		if (serial_argc != 3)
 			return -1;
 		pwm_prescale = atoi(serial_argv[2]);
+	} else if (strcmp(serial_argv[1], "dir") == 0) {
+		if (serial_argc != 3)
+			return -1;
+		pwm_direction = atoi(serial_argv[2]);
 	} else {
 		return -1;
 	}
@@ -106,6 +110,7 @@ static void adc_update()
 
 	adc_source ^= 1;
 	adc_value[adc_source] = ADC;
+
 	adc_start_conversion();
 }
 
@@ -113,7 +118,7 @@ static void adc_update()
 void main()
 {
 	DDRC |= (1<<5);
-
+	
 	serial_init();
 	mfrc522_init();
 	pwm_init();
